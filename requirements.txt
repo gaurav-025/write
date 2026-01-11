@@ -6,3 +6,4 @@ psycopg2-binary
 dj-database-url
 python-dotenv
 markdown2
+gunicorn
