@@ -1,0 +1,194 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<style>
+  /* .ghibli-bg {
+    background: linear-gradient(135deg, #faf1e4, #e3fce9);
+    font-family: 'Quicksand', 'Poppins', sans-serif;
+  } */
+
+  .ghibli-card {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 1.2rem;
+  background: #ffffff;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  animation: fadeInUp 0.6s ease-out;
+  transition: all 0.3s ease;
+}
+
+.ghibli-title {
+  font-weight: 700;
+  color: #212529;
+  font-family: 'Merriweather','Segoe UI', 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-shadow: none;
+}
+
+.form-floating > label {
+  font-size: 0.95rem;
+  color: #495057;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+}
+
+.form-control {
+  border: 1.5px solid #ced4da;
+  border-radius: 0.65rem;
+  background-color: #f8f9fa;
+  color: #212529;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: green;
+  background-color: #ffffff;
+  color: #212529;
+  box-shadow: 0 0 0 3px green;
+  outline: none;
+}
+
+.ghibli-btn {
+  background-color: green;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+}
+
+.ghibli-btn:hover {
+  background-color: darkgreen;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.4rem;
+  padding-left: 0.25rem;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+</style>
+
+<div class="d-flex justify-content-center align-items-center ghibli-bg" style="min-height: 80vh;">
+  <div class="card shadow-lg p-5 ghibli-card">
+      <!-- <i class="fa-solid fa-leaf text-success"></i> -->
+    <h2 class="text-center mb-4 ghibli-title">Create your account</h2>
+    <form method="POST" novalidate>
+      {% csrf_token %}
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control {% if form.username.errors %}is-invalid{% endif %}" id="username" name="username" placeholder="Username" value="{{ form.username.value|default_if_none:'' }}">
+        <label for="username">Username</label>
+        {% for error in form.username.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" id="email" name="email" placeholder="Email" value="{{ form.email.value|default_if_none:'' }}">
+        <label for="email">Email</label>
+        {% for error in form.email.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="form-floating mb-3 position-relative">
+        <input type="password" class="form-control {% if form.password.errors %}is-invalid{% endif %}" id="password" name="password" placeholder="Password">
+        <label for="password">Password</label>
+        {% if not form.errors %}
+        <span class="fa-solid fa-eye toggle-password" data-target="password" style="position: absolute; top: 50%; right: 1rem; transform: translateY(-50%); cursor: pointer;">
+        </span>
+        {% endif %}
+        {% for error in form.password.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+
+      <div class="form-floating mb-4 position-relative">
+        <input type="password" class="form-control {% if form.password_confirm.errors %}is-invalid{% endif %}" id="password_confirm" name="password_confirm" placeholder="Confirm Password">
+        <label for="password_confirm">Confirm Password</label>
+        {% if not form.errors %}
+        <span class="fa-solid fa-eye toggle-password" data-target="password_confirm" style="position: absolute; top: 50%; right: 1rem; transform: translateY(-50%); cursor: pointer;">
+        </span>
+        {% endif %}
+        {% for error in form.password_confirm.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+       <!-- <i class="fa-solid fa-leaf text-success"></i> -->
+      <button type="submit" class="btn ghibli-btn w-100 py-2">Create Account</button>
+       <!-- <i class="fa-solid fa-sparkles text-warning"></i> -->
+    </form>
+    <p class="text-center mt-4 mb-0" style="font-size:0.95rem; font-weight:500">
+      Already have an account?
+      <a href="{% url 'custom_login' %}" style="color: green; font-weight: 600;">Login</a>
+    </p>
+  </div>
+</div>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% if form.errors %}
+<script>
+    Swal.fire({
+        toast: true,
+        icon: 'error',
+        title: `{% if form.non_field_errors %}{{ form.non_field_errors.0|escapejs }}{% elif form.username.errors %}{{ form.username.errors.0|escapejs }}{% elif form.email.errors %}{{ form.email.errors.0|escapejs }}{% elif form.password.errors %}{{ form.password.errors.0|escapejs }}{% elif form.password_confirm.errors %}{{ form.password_confirm.errors.0|escapejs }}{% else %}Sign up failed{% endif %}`,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        showClass: {
+            popup: 'swal2-show slideInDown faster'
+        },
+        hideClass: {
+            popup: 'swal2-hide fadeOutUp faster'
+        }
+    });
+</script>
+{% endif %}
+{% endblock %}

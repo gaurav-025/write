@@ -1,0 +1,160 @@
+.markdown-preview {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  font-family: 'Merriweather','Segoe UI', sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #222;
+  transition: all 0.3s ease;
+}
+
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3 {
+  color: #111;
+  border-bottom: 1px solid #e1e1e1;
+  padding-bottom: 0.3rem;
+  margin-top: 1.4rem;
+  font-weight: 600;
+}
+
+.markdown-preview h1 { font-size: 2rem; }
+.markdown-preview h2 { font-size: 1.6rem; }
+.markdown-preview h3 { font-size: 1.3rem; }
+
+.markdown-preview code {
+  background-color: #f0f0f0;
+  color: #d63384;
+  padding: 0.25rem 0.45rem;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
+}
+
+.markdown-preview pre {
+  background-color: #1e1e1e;
+  color: #f8f8f2;
+  padding: 1rem;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.markdown-preview ul, .markdown-preview ol {
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-preview li {
+  margin-bottom: 0.3rem;
+}
+
+.markdown-preview blockquote {
+  border-left: 4px solid #ccc;
+  padding-left: 1rem;
+  color: #555;
+  background: #f4f4f4;
+  margin: 1rem 0;
+  font-style: italic;
+  font-family: 'Merriweather','Segoe UI', sans-serif;
+}
+
+.markdown-preview a {
+  color: #0d6efd;
+  text-decoration: underline;
+}
+
+.markdown-preview a:hover {
+  color: #0a58ca;
+  text-decoration: none;
+}
+
+.markdown-preview table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+}
+
+.markdown-preview th,
+.markdown-preview td {
+  border: 1px solid #ddd;
+  padding: 0.6rem;
+  text-align: left;
+}
+
+.markdown-preview th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+}
+
+.markdown-preview img {
+  max-width: 100%;
+  border-radius: 6px;
+  margin: 1rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+
+.post-content {
+  font-family: 'Merriweather','Segoe UI', sans-serif;
+  color: #000000;
+  line-height: 1.75;
+  font-size: 1.05rem;
+}
+
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  background-color: #ffffff;
+  border: 1px solid #a5a5a5;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.post-content th,
+.post-content td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #bbbbbb;
+}
+
+.post-content thead {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.post-content tbody tr:hover {
+  background-color: #f9f9f9;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.post-content blockquote {
+  border-left: 4px solid #ccc;
+  background: #f4f4f4;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #444;
+  border-radius: 6px;
+  position: relative;
+}
+
+.post-content blockquote::before {
+  /* content: "“"; */
+  font-size: 2.5rem;
+  color: #ccc;
+  position: absolute;
+  left: 10px;
+  top: -10px;
+  font-family: 'Merriweather',serif;
+}
+
+.post-content blockquote p {
+  margin: 0;
+}

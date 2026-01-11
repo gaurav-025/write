@@ -1,0 +1,219 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block title %}Edit Post{% endblock %}
+
+{% block content %}
+<style>
+  .form-modern {
+  background: #ffffff;
+  border: 1px solid #bbbbbb;
+  font-family: 'Merriweather', 'Segoe UI', sans-serif;
+  padding: 2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.heading-modern {
+  color: #222;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.text-muted-modern {
+  color: #6c757d;
+}
+
+.form-floating > .form-control {
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  background-color: #fdfdfd;
+  font-family: 'Merriweather', sans-serif;
+  padding: 1rem 0.75rem;
+}
+
+.form-floating > label {
+  color: #555;
+  font-weight: 500;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.btn-modern {
+  background-color: #0d6efd;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  font-family: 'Merriweather','Segoe UI', sans-serif;
+  border-radius: 6px;
+  padding: 0.6rem 1.25rem;
+  transition: 0.3s ease;
+}
+
+.btn-modern:hover {
+  background-color: #0b5ed7;
+  color: #fff;
+}
+
+.markdown-area {
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 6px;
+  background: #f8f9fa;
+  border: 1px solid #ced4da;
+  transition: all 0.3s ease;
+}
+
+.markdown-area:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.tagify-input {
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  background-color: #ffffff;
+  padding: 0.6rem 1rem;
+  font-family: 'Merriweather', sans-serif;
+  font-size: 1rem;
+  min-height: 46px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tagify-input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.form-floating > .tagify-input {
+  height: auto !important;
+  min-height: 58px;
+  padding-top: 1.4rem;
+  color: #2f2e2e;
+  font-weight: 500;
+}
+
+.live-preview-label {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #222;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Merriweather','Segoe UI', sans-serif;
+}
+
+</style>
+
+<div class="container py-4 d-flex justify-content-center align-items-center" style="min-height: 50vh;">
+  <div class="card shadow-lg p-4 form-modern" style="width: 100%; max-width: 1600px; border-radius: 0rem;">
+    <h2 class="mb-4 text-center heading-modern">
+      <i class="fas fa-edit me-2 text-warning"></i> Edit Your Post
+    </h2>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="form-floating mb-3">
+        {{ form.title }}
+        <label for="{{ form.title.id_for_label }}"><i class="fas fa-heading me-2"></i> Post Title</label>
+      </div>
+
+      <small class="form-text text-muted">
+        ✍️ You can use <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">Markdown syntax</a> to format your post.
+      </small>
+
+      <div class="form-floating mb-3">
+        {{ form.content }}
+        <label for="{{ form.content.id_for_label }}"><i class="fas fa-book me-2"></i> Edit your content</label>
+      </div>
+      
+
+      <div class="d-flex justify-content-between align-items-center flex-wrap mt-3">
+  <div class="d-flex flex-wrap gap-2 align-items-center ms-auto mt-2 mt-md-0">
+    <a href="{% url 'post_detail' slug=post.slug %}" class="btn btn-outline-danger py-2 btn-modern">
+      <i class="fas fa-times-circle me-2"></i> Discard Changes
+    </a>
+    <button type="submit" class="btn btn-warning py-2 btn-modern">
+      <i class="fas fa-save me-2"></i> Save Changes
+    </button>
+  </div>
+</div>
+    </form>
+  </div>
+</div>
+
+<link rel="stylesheet" href="{% static 'css/markdown.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const textarea = document.querySelector('.markdown-area');
+
+    if (textarea) {
+      const label = document.createElement('h5');
+      label.textContent = 'Live Preview';
+      label.className = 'live-preview-label';
+      const preview = document.createElement('div');
+      preview.className = 'p-3 border bg-light rounded markdown-preview';
+      textarea.parentNode.insertBefore(label, textarea.nextSibling);
+      textarea.parentNode.insertBefore(preview, label.nextSibling);
+      textarea.addEventListener('input', () => {
+        preview.innerHTML = marked.parse(textarea.value);
+      });
+      preview.innerHTML = marked.parse(textarea.value);
+    }
+  });
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const input = document.querySelector('.tagify-input');
+    new Tagify(input, {
+      whitelist: [],
+      dropdown: {
+        enabled: 0,
+        maxItems: 5,
+        classname: "tags-look",
+        closeOnSelect: false
+      }
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const textareas = document.querySelectorAll('textarea.auto-expand');
+    textareas.forEach(textarea => {
+      textarea.addEventListener('input', () => {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      });
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdownItems = document.querySelectorAll(".dropdown-menu .dropdown-item");
+    const dropdownButton = document.getElementById("visibilityDropdown");
+    const visibilityInput = document.getElementById("visibilityInput");
+
+    dropdownItems.forEach(item => {
+      item.addEventListener("click", function (e) {
+        e.preventDefault();
+        const icon = this.querySelector("i").outerHTML;
+        const label = this.textContent.trim();
+        dropdownButton.innerHTML = `${icon} ${label}`;
+        visibilityInput.value = this.getAttribute("data-value");
+      });
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,231 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Home - Write.Com{% endblock %}
+
+{% block content %}
+
+<style>
+    .create-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 100px; 
+  width: 100px;
+  height: 100px;
+  background-color: #7f674d;
+  color: white;
+  border-radius: 50%;
+  border:none;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #8f2904, darkgreen);
+  animation: floatPulse 2s ease-in-out infinite;
+}
+
+.create-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  right: 50%;
+  transform: translateX(50%);
+  background: #2c2c2c;
+  color: #fffbe6;
+  padding: 6px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  font-size: 1rem;
+  font-family: 'Merriweather', sans-serif;
+  font-weight:500;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.create-btn:hover::after {
+  opacity: 1;
+  transform: translateX(50%) translateY(-5px);
+}
+
+.create-btn:hover {
+  background-color: #5f4d39;
+  transform: translateY(-3px);
+  color: white;
+}
+
+.create-btn i {
+  font-size: 40px;
+  color: white;
+  transition: transform 0.3s ease, color 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  animation: shimmer 3s infinite ease-in-out;
+  justify-content: center;
+}   
+
+.create-btn:hover i {
+  transform: rotate(-10deg) scale(1.1);
+  color: #fceabb;
+   animation: spin 0.8s linear;
+}
+
+@keyframes shimmer {
+  0% {
+    text-shadow: 0 0 5px #fff7d6;
+  }
+  50% {
+    text-shadow: 0 0 10px #ffe48f;
+  }
+  100% {
+    text-shadow: 0 0 5px #fff7d6;
+  }
+}
+
+@keyframes floatPulse {
+  0%, 100% {
+    transform: translateY(0px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: translateY(-20px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.section-heading {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2a2a2a;
+  text-align: center;
+  font-family: 'Merriweather', 'Segoe UI', sans-serif;
+}
+
+.post-card-modern {
+  border: none;
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card-modern:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.post-card-modern .card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #222;
+  line-height: 1.4;
+}
+
+.title-link {
+  color: #1e1e1e;
+  transition: color 0.2s ease;
+}
+
+.title-link:hover {
+  color: green;
+}
+
+.card-meta {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.preview-text {
+  font-size: 0.96rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.btn-read {
+  background-color: green;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn-read:hover {
+  background-color: darkgreen;
+  color: #fff;
+}
+
+</style>
+  <div class="container py-4">
+  <h2 class="section-heading mb-4">All Posts</h2>
+  <div class="row g-4">
+    {% for post in page_obj %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card post-card-modern h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title mb-2">
+              <a href="{% url 'post_detail' slug=post.slug %}" class="text-decoration-none title-link">{{ post.title }}</a>
+            </h5>
+            <p class="card-meta small mb-2">
+              <i class="fas fa-user me-1"></i> {{ post.author.username }} &middot;
+              <i class="fas fa-calendar-alt me-1"></i> {{ post.created_at|date:"F j, Y" }} &middot;
+              <i class="fas fa-clock me-1"></i> {{ post.read_time }}
+            </p>
+            <a href="{% url 'post_detail' slug=post.slug %}" class="btn btn-read mt-auto">
+              <i class="fas fa-book-open me-2"></i> Read More
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% if page_obj.has_other_pages %}
+    <nav class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+</div>
+
+<a href="{% url 'create_post' %}" class="create-btn" data-tooltip="Create a new post">
+    <i class="fa-solid fa-pen-to-square"></i>
+</a> 
+{% endblock %}
