@@ -14,7 +14,7 @@ class Profile(models.Model):
         return self.user.username
 
 class Tag(models.Model):
-    name=models.CharField(max_length=50,unique=True)
+    name=models.CharField(max_length=255,unique=True)
 
     def __str__(self):
         return self.name
