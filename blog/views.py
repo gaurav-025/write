@@ -102,6 +102,10 @@ def custom_register(request):
             subject='Verify your email for Write'
             message=f'Hi {user.username},\n\nPlease verify your email by clicking the link:\n{verify_url}'
 
+            print(subject)
+            print(message)
+            print(email)
+
             send_mail(subject,message,'noreply@write.com',[email])
 
             messages.success(request,"registration successfull. Check your email to verify your account.")
