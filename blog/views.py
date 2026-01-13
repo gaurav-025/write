@@ -106,7 +106,7 @@ def custom_register(request):
             print(message)
             print(email)
 
-            send_mail(subject,message,'noreply@write.com',[email])
+            send_mail(subject,message,settings.DEFAULT_FROM_EMAIL,[email])
 
             messages.success(request,"registration successfull. Check your email to verify your account.")
 
