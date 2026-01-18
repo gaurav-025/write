@@ -98,6 +98,8 @@ AUTHENTICATION_BACKENDS = [
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+
+SENDGRID_SANDBOX_MODE_IN_DEBUG=False
 EMAIL_BACKEND="sendgrid_backend.SendgridBackend" 
 SENDGRID_API_KEY=os.getenv("SENDGRID_API_KEY")
 
