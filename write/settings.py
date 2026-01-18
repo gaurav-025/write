@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'sendgrid_backend',
 ]
 
 
@@ -97,7 +98,7 @@ AUTHENTICATION_BACKENDS = [
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND="django_sendgrid_backend.SendgridBackend" 
+EMAIL_BACKEND="sendgrid_backend.SendgridBackend" 
 SENDGRID_API_KEY=os.getenv("SENDGRID_API_KEY")
 
 EMAIL_HOST='api.sendgrid.com'
