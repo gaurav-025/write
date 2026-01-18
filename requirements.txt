@@ -7,3 +7,5 @@ dj-database-url
 python-dotenv
 markdown2
 gunicorn
+sendgrid
+django-sendgrid-v5
